@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie"; 
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -36,8 +36,14 @@ export default function Login() {
 
         const decoded = jwtDecode(token);
         setUserData(decoded);
-        console.log(decoded);
-        router.push('/home');
+        // console.log(decoded);
+        if (decoded.role == "teacher") {
+          router.push("/teacherDashboard");
+        } else if (decoded.role == "teacher") {
+          router.push("/studentDashboard");
+        } else {
+          router.push("/adminDashboard");
+        }
       } else {
         const data = await response.json();
         console.error("Error logging in:", data.message);
@@ -48,7 +54,6 @@ export default function Login() {
     }
   };
 
- 
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSubmit}>

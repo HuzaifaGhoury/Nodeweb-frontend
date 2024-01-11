@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
-const Home = () => {
+const teacherDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const router = useRouter();
@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/user", {
+        const response = await fetch("http://localhost:3001/teacherdashboard", {
           method: "GET",
           credentials: "include",
         });
@@ -52,6 +52,8 @@ const Home = () => {
       <nav class="navbar navbar-light bg-light px-11">
         <div class="container-fluid">
           <span class="navbar-brand mb-0 h1">{user.username}</span>
+          <span class="navbar-brand mb-0 h1">{user.role} Dashboard</span>
+          
           <button class="w-24 bg-slate-950" onClick={logout}>
             Logout
           </button>
@@ -61,4 +63,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default teacherDashboard;
